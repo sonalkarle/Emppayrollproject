@@ -7,10 +7,12 @@ namespace RepositoryLayer.Interface
 {
     public interface IEmployeeRL
     {
-        public List<EmployeeDetailModel> GetAllEmployeeRecords();
+       public List<EmployeeDetailModel> GetAllEmployeeRecords();
         public EmployeeDetailModel GetEmployee(int id);
-        public bool DeleteEmployee(int id);
-        public bool UpdateEmployee(EmployeeDetailModel employeeDetailModel);
+       public bool DeleteEmployee(int id);
+       public bool UpdateEmployee( EmployeeDetailModel employeeDetailModel,int id);
+        public EmployeeDetailModel RegisterEmployee(EmployeeDetailModel employeeDetailModel);          
+
 
     }
 

@@ -14,10 +14,12 @@ namespace BusinessLayer.Interface
 
         public List<EmployeeDetailModel> GetAllEmployeeRecords();
 
-        public bool DeleteEmployee(int id);
+       public bool DeleteEmployee(int id);
 
-        public bool UpdateEmployee(EmployeeDetailModel employeeDetailModel);
+       public bool UpdateEmployee(EmployeeDetailModel employeeDetailModel,int id);
 
+        public EmployeeDetailModel RegisterEmployee(EmployeeDetailModel employeeDetailModel);
+       
     }
 
     

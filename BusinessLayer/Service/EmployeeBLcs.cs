@@ -15,7 +15,7 @@ namespace BusinessLayer.Service
             this.employeeRL = employeeRL;
         }
 
-
+        
 
         public List<EmployeeDetailModel> GetAllEmployeeRecords()
         {
@@ -44,6 +44,7 @@ namespace BusinessLayer.Service
                 throw e;
             }
         }
+        
         public bool DeleteEmployee(int id)
         {
             try
@@ -57,15 +58,14 @@ namespace BusinessLayer.Service
                 throw e;
             }
         }
-
-
         
-        public bool UpdateEmployee(EmployeeDetailModel employeeDetailModel)
+        
+        public EmployeeDetailModel RegisterEmployee(EmployeeDetailModel employeeDetailModel)
         {
             try
             {
 
-                return this.employeeRL.UpdateEmployee(employeeDetailModel);                 //throw exceptions
+                return this.employeeRL.RegisterEmployee(employeeDetailModel);                 //throw exceptions
             }
 
             catch (Exception e)
@@ -73,8 +73,24 @@ namespace BusinessLayer.Service
                 throw e;
             }
         }
+        
+       
+        public bool UpdateEmployee(EmployeeDetailModel employeeDetailModel,int id )
+        {
+            try
+            {
 
+                return this.employeeRL.UpdateEmployee( employeeDetailModel,id);                 //throw exceptions
+            }
 
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+       
+        
+        
 
 
     }

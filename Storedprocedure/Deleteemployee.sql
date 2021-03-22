@@ -1,4 +1,4 @@
-USE[Employee_Details]
+USE[employeeDetails]
 
 GO
 
@@ -14,5 +14,5 @@ BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
-	Delete from employee   where id=@id;
+	Delete from employeeDetails   where id=@id;
 	end

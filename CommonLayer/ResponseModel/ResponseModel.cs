@@ -15,6 +15,8 @@ namespace CommonLayer.ResponseModel
        
         public char Gender { get; set; }
 
+        public  string image { get; set; }
+
        
         public int Salary { get; set; }
 
@@ -25,14 +27,21 @@ namespace CommonLayer.ResponseModel
     
         public string Notes { get; set; }
 
-        
         public int DeptID { get; set; }
 
-   
-        public string Department1 { get; set; }
 
+        public string Department1 { get; set; }
         public string Department2 { get; set; }
 
         public string Department3 { get; set; }
+
+
+
+
+
+
+
+
+
     }
 }

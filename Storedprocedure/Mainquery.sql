@@ -1,47 +1,50 @@
-create database Employee_Details;
-use EmployeeDetails
+Create database employeeDetails
+use employeeDetails
 
-Create table employee
+Create table employeeDetails
 (
- id int identity (1,1),
- Name varchar (50),
- Gender varchar(1),
- Salary int ,
- startDate Date,
- Note varchar(100),
- Primary key (id)
- )
+id int identity(1,1),
+Name varchar(80),
+Gender varchar(1),
+Image varchar(255),
+Salary int,
+StartDate Date,
+Notes varchar(255)
+primary key(id),
+Constraint employee unique(Name)
+)
 
- Create table department
- (
-   DeptId int,
-   Department1 varchar(123),
-   Department2   varchar(125),
-   Department3 varchar (255)
-    foreign key (DeptId) references employee (id) on delete cascade
-   )
+Create table DepartmentDeatils
+(
+DeptID int identity(1,1),
+Department1 Varchar (100),
+Department2 Varchar (100),
+Department3 Varchar (100),
+primary key(DeptID)
 
-
-   Insert into employee(Name,Gender,Salary,startDate,Note)
-   Values ('Ajinkya','M',30000,'2017-01-01','NULL'),
-           ('Priya','F',25000,'2017-02-01','NULL'),
-		   ('Kunal','M',45000,'2018-01-01','NULL'),
-		   ('Shubham','M',20000,'2019-01-01','NULL'),
-		   ('Kirti','F',56000,'2019-02-02','NULL'),
-		   ('Seema','F',35000,'2020-01-1','NULL');
-
-	insert into department (DeptID,Department1,Department2,Department3)
-	Values ( 1,'HR','NULL','Management'),
-	        (2,'NULL','Finance','Management'),
-			(3,'HR','Finance','NULL'),
-			(4,'HR','Finance','Management'),
-			(5,'NULL','Finance','NULL'),
-			(6,'HR','NULL','Management');
- select * from employee
- select * from department
+)
+insert into DepartmentDeatils(Department1,Department2,Department3)values('HR','NULL','Management'),
+                                                                         ('NULL','Finance','Management'),
+                                                                          ('HR','NULL','Management'),
+																		  ('NULL','NULL','Management');
 
 
- 
- Execute Er_GetAllEmployeedetails
- Execute Er_GetoneEmployeedetails 2
- Execute Er_Getupdatedeatils 2,'Sonal','F',30000,'2020-01-01','NULL' ,2
+
+  Insert into employeeDetails(Name,Gender,image,Salary,startDate,Notes)
+   Values ('Ajinkya','M',NULL,30000,'2017-01-01','NULL'),
+           ('Priya','F',NULL,25000,'2017-02-01','NULL'),
+		   ('Kunal','M',NULL,45000,'2018-01-01','NULL'),
+		   ('Shubham','M',NULL,20000,'2019-01-01','NULL');
+
+  
+	update employeeDetails set Image = 'XYZ'
+	update employeeDetails set Notes = 'ABC'
+		
+ select * from employeeDetails
+ select * from DepartmentDeatils;
+
+Execute.Er_GetAllEmployeedetails
+Execute.Er_GetoneEmployeedetails 2
+Execute Er_Getupdatedeatils 2,'Krishna','M','ASD',3000,'2019-02-02','XYZ',2,'HR','Finanace','NULL';
+Execute AddEmployeeDetail 'Priya','F','PQR',25000,'2016-01-01','ASD','Fianance','Management','NULL';
+Execute DeleteEmployeeDetail 15

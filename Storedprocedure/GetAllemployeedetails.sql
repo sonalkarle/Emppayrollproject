@@ -1,4 +1,4 @@
-USE [Employee_Details]
+USE [employeeDetails]
 GO
 
 SET ANSI_NULLS ON
@@ -6,7 +6,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-Create PROCEDURE [dbo].[Er_GetAllEmployeedetails] 
+Alter PROCEDURE [dbo].[Er_GetAllEmployeedetails] 
 AS
 BEGIN
 
@@ -15,9 +15,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-select id,Name,Gender,Salary,startDate,Note,DeptId,Department1,Department2,Department3 from employee
-  left join department on employee.id = department.DeptId
-  
+	 select id, Name,Gender,image,Salary,StartDate,Notes,DeptID,Department1,Department2,Department3 from employeeDetails
+	 left join DepartmentDeatils on DepartmentDeatils.DeptID=employeeDetails.id
 
 END
 

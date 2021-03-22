@@ -12,8 +12,9 @@ namespace RepositoryLayer.Service
     public class EmployeeRL : IEmployeeRL                            //Inheriting IEmployeeRL into Class EmployeeRL
     {
 
-        private static string connectionString = "Data Source=DESKTOP-OKP25QH;Initial Catalog=Employee_Details;Integrated Security=SSPI";
+        private static string connectionString = "Data Source=DESKTOP-OKP25QH;Initial Catalog=employeeDetails;Integrated Security=SSPI";
         public EmployeeDetailModel employeeModel = new EmployeeDetailModel();
+        
         public List<EmployeeDetailModel> GetAllEmployeeRecords()
         {
          
@@ -38,21 +39,24 @@ namespace RepositoryLayer.Service
                         {
                             while (sqlDataReader.Read())
                             {
-                                //insert into a list
-                                lists.Add(new EmployeeDetailModel
-                                {
-                                    id = sqlDataReader.GetInt32(0),
-                                    Name = sqlDataReader.GetString(1),
-                                    Gender = Convert.ToChar(sqlDataReader.GetString(2)),
-                                    Salary = sqlDataReader.GetInt32(3),
-                                    startDate = sqlDataReader.GetDateTime(4),
-                                    Notes = sqlDataReader.GetString(5),
-                                    DeptID  = sqlDataReader.GetInt32(6),
-                                    Department1= sqlDataReader.GetString(7),
-                                    Department2 = sqlDataReader.GetString(8),
-                                    Department3 = sqlDataReader.GetString(9),
+                            //insert into a list
+                            lists.Add(new EmployeeDetailModel
+                            {
 
-                                }); ;
+                                id = sqlDataReader.GetInt32(0),
+                                Name = sqlDataReader.GetString(1),
+                                Gender = Convert.ToChar(sqlDataReader.GetString(2)),
+                                image = sqlDataReader.GetString(3),
+                                Salary = sqlDataReader.GetInt32(4),
+                                startDate = sqlDataReader.GetDateTime(5),
+                                Notes = sqlDataReader.GetString(6),
+                                DeptID = sqlDataReader.GetInt32(7),
+                                Department1 = sqlDataReader.GetString(8),
+                                Department2 = sqlDataReader.GetString(9),
+                                Department3 = sqlDataReader.GetString(10)
+
+
+                            }); ; ; ;
                             }
 
                         }
@@ -70,8 +74,11 @@ namespace RepositoryLayer.Service
             }
             
         }
+        
         public EmployeeDetailModel GetEmployee(int id)
         {
+            
+
             try
             {
                
@@ -92,16 +99,18 @@ namespace RepositoryLayer.Service
                         {
                             while (sqlDataReader.Read())
                             {
-                                employeeModel.id = sqlDataReader.GetInt32(0);
-                                employeeModel.Name = sqlDataReader.GetString(1);
-                                employeeModel.Gender = Convert.ToChar(sqlDataReader.GetString(2));
-                                employeeModel.Salary = sqlDataReader.GetInt32(3);
-                                employeeModel.startDate = sqlDataReader.GetDateTime(4);
-                                employeeModel.Notes = sqlDataReader.GetString(5);
-                                employeeModel.DeptID = sqlDataReader.GetInt32(6);
-                                employeeModel.Department1 = sqlDataReader.GetString(7);
-                                employeeModel.Department2 = sqlDataReader.GetString(8);
-                                employeeModel.Department3 = sqlDataReader.GetString(9);
+                            employeeModel.id = sqlDataReader.GetInt32(0);
+                            employeeModel.Name = sqlDataReader.GetString(1);
+                            employeeModel.Gender = Convert.ToChar(sqlDataReader.GetString(2));
+                            employeeModel.image = sqlDataReader.GetString(3);
+                            employeeModel.Salary = sqlDataReader.GetInt32(4);
+                            employeeModel.startDate = sqlDataReader.GetDateTime(5);
+                            employeeModel.Notes = sqlDataReader.GetString(6);
+                            employeeModel.DeptID = sqlDataReader.GetInt32(7);
+                            employeeModel.Department1 = sqlDataReader.GetString(8);
+                            employeeModel.Department2 = sqlDataReader.GetString(9);
+                            employeeModel.Department3 = sqlDataReader.GetString(10);
+
                         }
                         }
 
@@ -109,14 +118,17 @@ namespace RepositoryLayer.Service
                         sqlDataReader.Close();
                         connection.Close();
                     }
+                return employeeModel;
+                
                 
             }
             catch (Exception e)
             {
                 throw e;
             }
-            return employeeModel;
+            
         }
+        
         public bool DeleteEmployee(int id)
         {
             try
@@ -142,13 +154,14 @@ namespace RepositoryLayer.Service
                                 employeeModel.id = sqlDataReader.GetInt32(0);
                                 employeeModel.Name = sqlDataReader.GetString(1);
                                 employeeModel.Gender = Convert.ToChar(sqlDataReader.GetString(2));
-                                employeeModel.Salary = sqlDataReader.GetInt32(3);
-                                employeeModel.startDate = sqlDataReader.GetDateTime(4);
-                                employeeModel.Notes = sqlDataReader.GetString(5);
-                                employeeModel.DeptID = sqlDataReader.GetInt32(6);
-                                employeeModel.Department1 = sqlDataReader.GetString(7);
-                                employeeModel.Department2 = sqlDataReader.GetString(8);
-                                employeeModel.Department3 = sqlDataReader.GetString(9);
+                                employeeModel.image = sqlDataReader.GetString(3);
+                                employeeModel.Salary = sqlDataReader.GetInt32(4);
+                                employeeModel.startDate = sqlDataReader.GetDateTime(5);
+                                employeeModel.Notes = sqlDataReader.GetString(6);
+                                employeeModel.DeptID = sqlDataReader.GetInt32(7);
+                                employeeModel.Department1 = sqlDataReader.GetString(8);
+                                employeeModel.Department2 = sqlDataReader.GetString(9);
+                                employeeModel.Department3 = sqlDataReader.GetString(10);
                         }
                             return true;
                         }
@@ -170,13 +183,12 @@ namespace RepositoryLayer.Service
         }
 
 
-        public bool UpdateEmployee(EmployeeDetailModel employeeModel)
+        public bool UpdateEmployee(EmployeeDetailModel employeeModel,int id)
         {
             try
             {
-                SqlConnection connection = new SqlConnection(connectionString);
-                
-                
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
                     string spName = @"dbo.[Er_Getupdatedeatils]";
                     using (connection)
                     {
@@ -187,28 +199,31 @@ namespace RepositoryLayer.Service
                         cmd.Parameters.AddWithValue("@id ", employeeModel.id);
                         cmd.Parameters.AddWithValue("@Name ", employeeModel.Name);
                         cmd.Parameters.AddWithValue("@Gender ", employeeModel.Gender);
-                        cmd.Parameters.AddWithValue("@Salary ", employeeModel.Salary);
+                        cmd.Parameters.AddWithValue("@image", employeeModel.image);
+                        cmd.Parameters.AddWithValue("@Salry ", employeeModel.Salary);
                         cmd.Parameters.AddWithValue("@StartDate ", employeeModel.startDate);
-                        cmd.Parameters.AddWithValue("@Notes ", employeeModel.Notes);
-                        cmd.Parameters.AddWithValue("@DeptId", employeeModel.DeptID);
+                        cmd.Parameters.AddWithValue("@note ", employeeModel.Notes);
+                        cmd.Parameters.AddWithValue("@department_id", employeeModel.DeptID);
+                        cmd.Parameters.AddWithValue("@Department1", employeeModel.Department1);
+                        cmd.Parameters.AddWithValue("@Department2", employeeModel.Department2);
+                        cmd.Parameters.AddWithValue("@Department3", employeeModel.Department3);
 
                         var result = cmd.ExecuteNonQuery();
                         if (result != 0)
                         {
                             return true;
+                           
                         }
 
                         else
                         {
                             return false;
                         }
-                         connection.Close();
 
-                     
+                        //Close Data Reader
+                        connection.Close();
                     }
-                     
-
-
+                }
             }
             catch (Exception e)
             {
@@ -216,6 +231,73 @@ namespace RepositoryLayer.Service
             }
         }
 
+        public EmployeeDetailModel RegisterEmployee(EmployeeDetailModel employeeModel)
+        {
+           
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string spName = @"dbo.[AddEmployeeDetail]";
+                    using (connection)
+                    {
+
+                        SqlCommand cmd = new SqlCommand(spName, connection);
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                    
+                        cmd.Parameters.AddWithValue("@EmpName", employeeModel.Name);
+                        cmd.Parameters.AddWithValue("@Gender", employeeModel.Gender);
+                        cmd.Parameters.AddWithValue("@image", employeeModel.image);
+                        cmd.Parameters.AddWithValue("@salary", employeeModel.Salary);
+                        cmd.Parameters.AddWithValue("@startdate", employeeModel.startDate);
+                        cmd.Parameters.AddWithValue("@Notes", employeeModel.Notes);
+                        cmd.Parameters.AddWithValue("@department1", employeeModel.Department1);
+                        cmd.Parameters.AddWithValue("@department2", employeeModel.Department2);
+                        cmd.Parameters.AddWithValue("@department3", employeeModel.Department3);
+
+                        connection.Open();
+
+                        SqlDataReader sqlDataReader = cmd.ExecuteReader();
+
+
+                        if (sqlDataReader.HasRows)
+                        {
+                            while (sqlDataReader.Read())
+                            {
+                                
+                                employeeModel.Name = sqlDataReader.GetString(0);
+                                employeeModel.Gender = Convert.ToChar(sqlDataReader.GetString(1));
+                                employeeModel.image = sqlDataReader.GetString(2);
+                                employeeModel.Salary = sqlDataReader.GetInt32(3);
+                                employeeModel.startDate = sqlDataReader.GetDateTime(4);
+                                employeeModel.Notes = sqlDataReader.GetString(5);
+                                employeeModel.DeptID = sqlDataReader.GetInt32(6);
+                                employeeModel.Department1 = sqlDataReader.GetString(7);
+                                employeeModel.Department2 = sqlDataReader.GetString(8);
+                                employeeModel.Department3 = sqlDataReader.GetString(9);
+
+
+                            }
+                        }
+
+
+                        sqlDataReader.Close();
+                        connection.Close();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return employeeModel;
+        }
+
+        
+
+        
 
 
     }

@@ -7,16 +7,19 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-Alter   PROCEDURE [dbo].[AddEmployeeDetail]
+Alter PROCEDURE [dbo].[AddEmployeeDetail]
 (
 	-- Add the parameters for the stored procedure here
 	@EmpName		varchar(255),
 	@Gender			char(1),
+	@image varchar(255),
 	@salary	int,
 	@startdate		Date,
 	@Notes       varchar(100),
-	@department_id int,
-	@empid int
+    @department1 varchar(80),
+	@department2 varchar(80),
+	@department3 varchar(80)
+	
 
 )
 AS
@@ -27,10 +30,11 @@ BEGIN
 
     -- Insert statements for procedure here
 	
-	INSERT INTO employee(Name, Gender, Salary, startDate, Note)
-	VALUES(@EmpName, @Gender, @salary, @startdate, @Notes)
-	select id,Name,Gender,Salary,startDate,Department.Department_id,DepartmentName from employee
-  left join Employee_Department on employee.id = Employee_Department.EmpDept_id
-  left join Department on Employee_Department.Department_id = Department.Department_id;
+	INSERT INTO employeeDetails(Name, Gender,image, Salary, startDate, Notes)
+	VALUES(@EmpName, @Gender,@image, @salary, @startdate, @Notes)
+	Insert into DepartmentDeatils(Department1,Department2,Department3)
+	values (@department1,@department2,@department3)
+      	 select Name,Gender,image,Salary,StartDate,Notes,DeptID,Department1,Department2,Department3 from employeeDetails left join DepartmentDeatils on DepartmentDeatils.DeptID=employeeDetails.id
+
 END
 
