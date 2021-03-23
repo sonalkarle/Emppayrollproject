@@ -231,71 +231,7 @@ namespace RepositoryLayer.Service
             }
         }
 
-        public EmployeeDetailModel RegisterEmployee(EmployeeDetailModel employeeModel)
-        {
-           
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    string spName = @"dbo.[AddEmployeeDetail]";
-                    using (connection)
-                    {
-
-                        SqlCommand cmd = new SqlCommand(spName, connection);
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                    
-                        cmd.Parameters.AddWithValue("@EmpName", employeeModel.Name);
-                        cmd.Parameters.AddWithValue("@Gender", employeeModel.Gender);
-                        cmd.Parameters.AddWithValue("@image", employeeModel.image);
-                        cmd.Parameters.AddWithValue("@salary", employeeModel.Salary);
-                        cmd.Parameters.AddWithValue("@startdate", employeeModel.startDate);
-                        cmd.Parameters.AddWithValue("@Notes", employeeModel.Notes);
-                        cmd.Parameters.AddWithValue("@department1", employeeModel.Department1);
-                        cmd.Parameters.AddWithValue("@department2", employeeModel.Department2);
-                        cmd.Parameters.AddWithValue("@department3", employeeModel.Department3);
-
-                        connection.Open();
-
-                        SqlDataReader sqlDataReader = cmd.ExecuteReader();
-
-
-                        if (sqlDataReader.HasRows)
-                        {
-                            while (sqlDataReader.Read())
-                            {
-                                
-                                employeeModel.Name = sqlDataReader.GetString(0);
-                                employeeModel.Gender = Convert.ToChar(sqlDataReader.GetString(1));
-                                employeeModel.image = sqlDataReader.GetString(2);
-                                employeeModel.Salary = sqlDataReader.GetInt32(3);
-                                employeeModel.startDate = sqlDataReader.GetDateTime(4);
-                                employeeModel.Notes = sqlDataReader.GetString(5);
-                                employeeModel.DeptID = sqlDataReader.GetInt32(6);
-                                employeeModel.Department1 = sqlDataReader.GetString(7);
-                                employeeModel.Department2 = sqlDataReader.GetString(8);
-                                employeeModel.Department3 = sqlDataReader.GetString(9);
-
-
-                            }
-                        }
-
-
-                        sqlDataReader.Close();
-                        connection.Close();
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            return employeeModel;
-        }
-
-        
+     
 
         
 
